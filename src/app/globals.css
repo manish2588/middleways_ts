@@ -1,0 +1,73 @@
+/* styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+/* styles/globals.css */
+
+/* Hide scrollbar for Chrome, Safari, and Opera */
+.scroll-hidden::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge, and Firefox */
+  .scroll-hidden {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  /* Ensure body doesn't have visible scrollbars */
+  body::-webkit-scrollbar {
+    display: none;
+  }
+  body {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  /* Cursor styles for dragging */
+  .cursor-grab {
+    cursor: grab;
+  }
+  
+  .cursor-grabbing {
+    cursor: grabbing;
+  }
+  
+  /* styles/globals.css */
+.contact-box {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .contact-box:hover {
+    background-color: blue;
+    color: white;
+  }
+  
+  .info-text {
+    position: absolute;
+    bottom: -40px; /* Adjust based on your layout */
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    color: black;
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: inline-block;
+    white-space: nowrap;
+  }
+  
+
+  
