@@ -2,7 +2,16 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Button from '../components/Button'; // Adjust the path if necessary
 
-const ServiceCard = ({ image, title, description, moreDescription, alignLeft }) => {
+// Define types for the props
+interface ServiceCardProps {
+  image: string; // URL of the image
+  title: string; // Title of the card
+  description: string; // Short description
+  moreDescription?: string; // Additional description, optional
+  alignLeft?: boolean; // Whether the image should be aligned to the left or right, optional
+}
+
+const ServiceCard: React.FC<ServiceCardProps> = ({ image, title, description, moreDescription, alignLeft }) => {
   const [showMore, setShowMore] = useState(false);
 
   // Button properties stored in an object

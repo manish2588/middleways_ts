@@ -1,13 +1,20 @@
 "use client"
 import React from 'react';
-import { useFormik } from 'formik';
+import { useFormik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 
+// Define the shape of the form values
+interface FormValues {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+}
+
 function ContactForm() {
- 
-  const formik = useFormik({
-    
+  // Initialize Formik with TypeScript
+  const formik = useFormik<FormValues>({
     initialValues: {
       name: '',
       email: '',
@@ -24,13 +31,13 @@ function ContactForm() {
       message: Yup.string().required('Message is required'),
     }),
     // Function to handle form submission
-    onSubmit: async (values, { resetForm }) => {
+    onSubmit: async (values: FormValues, { resetForm }: FormikHelpers<FormValues>) => {
       console.log('Form data submitted:', values); // Log form data before sending
 
       try {
         // Send form data to the backend using Axios post request
         const response = await axios.post('http://localhost:5004/submit-form', values);
-        console.log( response.data);
+        console.log(response.data);
         alert('Message Sent Successfully. We will reply to you soon'); 
         resetForm(); // Reset the form after successful submission
       } catch (error) {
@@ -107,7 +114,7 @@ function ContactForm() {
           <textarea
             id="message"
             name="message"
-            rows="4"
+            rows={4}
             className="block py-2.5 px-4 w-full text-sm text-gray-900 bg-transparent border border-blue-600 rounded-md appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none peer"
             placeholder="Message"
             value={formik.values.message}
@@ -121,17 +128,13 @@ function ContactForm() {
           ) : null}
         </div>
 
-        
         <button
-       type="submit"
-      className="bg-transparent font-serif text-black border border-blue-500 hover:bg-blue-500 hover:text-black hover:border-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm w-full sm:w-auto px-5 py-2 text-center dark:bg-transparent dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+          type="submit"
+          className="bg-transparent font-serif text-black border border-blue-500 hover:bg-blue-500 hover:text-black hover:border-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm w-full sm:w-auto px-5 py-2 text-center dark:bg-transparent dark:hover:bg-blue-600 dark:focus:ring-blue-800"
         >
-      Send Message
-       </button>
-
+          Send Message
+        </button>
       </form>
-
-      
     </div>
   );
 }

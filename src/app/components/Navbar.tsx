@@ -6,14 +6,14 @@ import { usePathname } from 'next/navigation';
 import image from '../../../public/images/hi-removebg-preview.png'; // Adjust the path if necessary
 import { useNavbarContext } from '../context/NavbarContext'; // Adjust the path if needed
 
-const Navbar = () => {
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
+const Navbar: React.FC = () => {
+  const [isSidebarOpen, setSidebarOpen] = useState<boolean>(false);
+  const [isDropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const { isNavbarTransparent, setIsNavbarTransparent } = useNavbarContext();
   const pathname = usePathname();
 
-  const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
-  const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
+  const toggleSidebar = () => setSidebarOpen(prev => !prev);
+  const toggleDropdown = () => setDropdownOpen(prev => !prev);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,7 +41,7 @@ const Navbar = () => {
 
   const handleLinkClick = () => setSidebarOpen(false);
 
-  const getActivePageName = () => {
+  const getActivePageName = (): string => {
     switch (pathname) {
       case '/':
         return 'Home';

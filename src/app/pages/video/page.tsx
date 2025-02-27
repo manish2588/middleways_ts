@@ -1,4 +1,4 @@
-import VideoGallery from '@/app/components/VideoGallery'
+import VideoGallery from '../../components/VideoGallery'
 import React from 'react'
 
 function page() {

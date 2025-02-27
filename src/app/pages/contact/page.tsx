@@ -1,23 +1,37 @@
+// pages/contact.tsx
 "use client"
 import React from 'react';
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
-import InfoCard from '@/app/components/InfoCard';
-import Card from '@/app/components/Card';
-import ContactForm from '@/app/components/ContactForm';
+import InfoCard from '../../components/InfoCard';
+import Card from '../../components/Card';
+import ContactForm from '../../components/ContactForm';
 
-function Contact() {
+// Define types for card and infoCard objects
+interface CardData {
+  title: string;
+  description: string;
+}
+
+interface InfoCardData {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  href: string;
+}
+
+const Contact: React.FC = () => {
   const handleSubmit = () => {
     console.log('Form submitted');
   };
 
-  const cards = [
+  const cards: CardData[] = [
     { title: "Experienced Crew", description: "Our crew members have a high experience working in filming sector of Nepal." },
     { title: "Complete Filming Solution", description: "From planning to delivery, we provide you with a high quality and a complete solution to your needs." },
     { title: "High Quality Equipment", description: "We provide all the latest technologies and equipment as per requirements." },
     { title: "Filming in Nepal", description: "We have been producing high-quality films and documentaries in Nepal." },
   ];
 
-  const infoCards = [
+  const infoCards: InfoCardData[] = [
     { icon: <FaPhoneAlt className="text-blue-500 text-3xl" />, title: "Call Us", description: "01-528029", href: "tel:01528029" },
     { icon: <FaEnvelope className="text-blue-500 text-3xl" />, title: "Email Us", description: "middlewayfilms@gmail.com", href: "mailto:middlewayfilms@gmail.com" },
     { icon: <FaMapMarkerAlt className="text-blue-500 text-3xl" />, title: "Main Office", description: "Kupondole, Lalitpur", href: "https://www.google.com/maps/search/?api=1&query=Kupondole,+Lalitpur" },
@@ -69,6 +83,6 @@ function Contact() {
       </div>
     </div>
   );
-}
+};
 
 export default Contact;

@@ -1,44 +1,53 @@
-"use client"
+"use client";
+
 import Image from 'next/image';
 import { useRef, useState, useEffect } from 'react';
 
-const ImageSlider = ({ images }) => {
-  const sliderRef = useRef(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
+interface ImageSliderProps {
+  images: string[];
+}
+
+const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
+  const sliderRef = useRef<HTMLDivElement | null>(null);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [startX, setStartX] = useState<number>(0);
+  const [scrollLeft, setScrollLeft] = useState<number>(0);
 
   // Handle mouse down event on the slider
-  const handleMouseDown = (e) => {
+  const handleMouseDown = (e: MouseEvent) => {
     setIsDragging(true);
-    setStartX(e.pageX - sliderRef.current.offsetLeft);
-    setScrollLeft(sliderRef.current.scrollLeft);
-    sliderRef.current.classList.add('cursor-grabbing'); // Change cursor to grabbing
+    if (sliderRef.current) {
+      setStartX(e.pageX - sliderRef.current.offsetLeft);
+      setScrollLeft(sliderRef.current.scrollLeft);
+      sliderRef.current.classList.add('cursor-grabbing'); // Change cursor to grabbing
+    }
   };
 
   // Handle mouse move event
-  const handleMouseMove = (e) => {
-    if (!isDragging) return;
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!isDragging || !sliderRef.current) return;
     const x = e.pageX - sliderRef.current.offsetLeft;
     const walk = (x - startX) * 2; // Scroll-fast multiplier
     sliderRef.current.scrollLeft = scrollLeft - walk;
   };
 
   // Handle mouse up event
-  const handleMouseUp = () => {
+  const handleMouseUp = (e: MouseEvent) => {
     setIsDragging(false);
-    sliderRef.current.classList.remove('cursor-grabbing'); // Change cursor back to grab
+    if (sliderRef.current) {
+      sliderRef.current.classList.remove('cursor-grabbing'); // Change cursor back to grab
+    }
   };
 
   // Handle mouse leave event to ensure dragging stops if the mouse leaves the component
-  const handleMouseLeave = () => {
+  const handleMouseLeave = (e: MouseEvent) => {
     if (isDragging) {
-      handleMouseUp();
+      handleMouseUp(e); // Call with the event argument
     }
   };
 
   // Prevent default image dragging behavior
-  const preventImageDrag = (e) => {
+  const preventImageDrag: React.DragEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault();
     e.stopPropagation(); // Stop the event from propagating to parent elements
   };
@@ -46,12 +55,15 @@ const ImageSlider = ({ images }) => {
   // Handle infinite scroll effect
   useEffect(() => {
     const slider = sliderRef.current;
+
     const handleScroll = () => {
-      const { scrollLeft, scrollWidth, clientWidth } = slider;
-      if (scrollLeft === 0) {
-        slider.scrollLeft = scrollWidth - 2 * clientWidth;
-      } else if (scrollLeft + clientWidth >= scrollWidth) {
-        slider.scrollLeft = clientWidth;
+      if (slider) {
+        const { scrollLeft, scrollWidth, clientWidth } = slider;
+        if (scrollLeft === 0) {
+          slider.scrollLeft = scrollWidth - 2 * clientWidth;
+        } else if (scrollLeft + clientWidth >= scrollWidth) {
+          slider.scrollLeft = clientWidth;
+        }
       }
     };
 
@@ -88,27 +100,23 @@ const ImageSlider = ({ images }) => {
   }, [isDragging, startX, scrollLeft]);
 
   return (
-    <div className="relative overflow-hidden bg-transparent w-[60vw] ">
+    <div className="relative overflow-hidden">
       <div
         ref={sliderRef}
-        className="flex overflow-x-auto space-x-16 py-4 scroll-hidden cursor-grab"
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseLeave}
+        className="flex overflow-x-auto space-x-10 py-2 scroll-hidden cursor-grab"
       >
         {allImages.map((src, index) => (
           <div
             key={index}
-            className="flex-shrink-0 w-32 h-16" // Adjust size here
-            onMouseDown={preventImageDrag} // Prevent default image dragging behavior
+            className="flex-shrink-0 w-64 h-40"
+            onDragStart={preventImageDrag} // Prevent default image dragging behavior
           >
             <Image
               src={src}
               alt={`Image ${index}`}
-              width={128} // Adjust width here
-              height={70} // Adjust height here
-              className="object-cover rounded-lg select-none " // Prevent image selection
+              width={256}
+              height={160}
+              className="object-cover rounded-lg select-none"
             />
           </div>
         ))}

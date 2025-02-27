@@ -1,6 +1,13 @@
 import React from 'react';
 
-const InfoCard = ({ icon, title, description, href }) => {
+interface InfoCardProps {
+  icon: React.ReactNode; // Define type for icon
+  title: string; // Define type for title
+  description: string; // Define type for description
+  href: string; // Define type for href
+}
+
+const InfoCard: React.FC<InfoCardProps> = ({ icon, title, description, href }) => {
   return (
     <div className="flex flex-col items-center p-4 border rounded-lg shadow-sm min-w-[250px] h-32 justify-center">
       <div className="text-3xl mb-2 transition-transform duration-300 transform hover:scale-125">

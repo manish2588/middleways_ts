@@ -1,29 +1,32 @@
 "use client";
+
 import Image from "next/image";
 import brimage from "../../public/images/HomeImage.png";
-import Button from "../../src/app/components/Button";
-import ImageSlider from "../../src/app/components/ImageSlider";
+import Button from "./components/Button";
+import ImageSlider from "./components/ImageSlider";
 import ImageSlider1 from "./components/ImageSlider2";
 import ContactInfo from "./components/ContactInfo";
 import VideoGallery from "./components/VideoGallery";
 import ImageSlider3 from "./components/ImageSlider3";
 
-export default function Home() {
-  const images1 = [
+const Home: React.FC = () => {
+  const images1: string[] = [
     "/images/Client1-removebg-preview.png",
     "/images/Client2-removebg-preview.png",
     "/images/Client3-removebg-preview.png",
     "/images/Client4-removebg-preview.png",
     "/images/Client5-removebg-preview.png",
   ];
-  const images2 = [
+
+  const images2: string[] = [
     "/images/Client1-removebg-preview (1).png",
     "/images/Client2-removebg-preview (1).png",
     "/images/Client3-removebg-preview (1).png",
     "/images/Client4-removebg-preview (1).png",
     "/images/Client6-removebg-preview (1).png",
   ];
-  const images3 = [
+
+  const images3: string[] = [
     "/images/Award1.png",
     "/images/Award2.png",
     "/images/Award3.png",
@@ -64,7 +67,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="w-full md:w-3/4 lg:w-2/3 mx-auto  p-4 rounded-lg mt-6">
+      <div className="w-full md:w-3/4 lg:w-2/3 mx-auto p-4 rounded-lg mt-6">
         <div className="w-full flex justify-center">
           <h1 className="mb-4 text-3xl font-large text-center font-serif">
             LIGHTS ! CAMERA ! ACTION!
@@ -86,7 +89,7 @@ export default function Home() {
           </h1>
         </div>
         <p
-          className="mb-3 font-thin text-gray-500 dark:text-gray-400 text-gray-950 tracking-wide font-openSans"
+          className="mb-3 font-thin text-gray-500 dark:text-gray-400 tracking-wide font-openSans"
           style={{ textAlign: "justify" }}
         >
           We are MIDDLEWAYS FILMS, your gateway to exceptional film production.
@@ -145,3 +148,5 @@ export default function Home() {
     </main>
   );
 }
+
+export default Home;
