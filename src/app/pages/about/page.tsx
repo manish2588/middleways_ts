@@ -1,9 +1,16 @@
 import React from 'react';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import Image1 from '../../../../public/images/logo.jpg';
 
+interface TeamMember {
+  id: number;
+  name: string;
+  position: string;
+  image: StaticImageData;
+  desp: string;
+}
 
-const teamMembers = [
+const teamMembers: TeamMember[] = [
   {
     id: 1,
     name: "Rakshya Neupane",
@@ -40,15 +47,15 @@ const teamMembers = [
     desp: "As a Line Producer and Production Manager at Kathmandu Films, Prakash manages national and international projects. He supervises the production schedules, coordinates the resources, and ensures that all goes smoothly within the production process. Prakash manages budgeting, logistics, and crew coordination so that the film output meets the creative and operational goals of the project. Focused on efficiency and quality, he is dedicated to delivering top-notch results in every production."
   },
   {
-    id:6,
+    id: 6,
     name: "Kaji",
-    position :"Office Boy",
+    position: "Office Boy",
     image: Image1,
-    desp : "Kaji Danuwar is working as an office assistant at Kathmandu Films. His role revolves around keeping the office atmosphere conducive for work, helping out in day-to-day errands, and ensuring that the team runs smoothly. He is committed to assisting in the accomplishment of goals of every project he is involved with through competent provision of services."
+    desp: "Kaji Danuwar is working as an office assistant at Kathmandu Films. His role revolves around keeping the office atmosphere conducive for work, helping out in day-to-day errands, and ensuring that the team runs smoothly. He is committed to assisting in the accomplishment of goals of every project he is involved with through competent provision of services."
   }
 ];
 
-function AboutUs() {
+const AboutUs: React.FC = () => {
   return (
     <div>
       <div className="flex justify-center mt-24 mb-8">
@@ -68,8 +75,8 @@ function AboutUs() {
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-center bg-white p-6">
-        {teamMembers.map(member => (
-          <div key={member.id} className="relative p-4 bg-white  flex flex-col items-center">
+        {teamMembers.map((member) => (
+          <div key={member.id} className="relative p-4 bg-white flex flex-col items-center">
             <div className="relative group">
               <Image
                 className="rounded-full"
@@ -85,13 +92,13 @@ function AboutUs() {
             <div className="text-center mt-4 w-96">
               <h2 className="text-xl font-semibold font-openSans">{member.name}</h2>
               <p className="text-gray-600 font-openSans">{member.position}</p>
-              <p className="text-gray-700 mt-2 font-openSans" >{member.desp}</p>
+              <p className="text-gray-700 mt-2 font-openSans">{member.desp}</p>
             </div>
           </div>
         ))}
       </div>
     </div>
   );
-}
+};
 
 export default AboutUs;

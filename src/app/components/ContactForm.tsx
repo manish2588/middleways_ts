@@ -1,8 +1,8 @@
-"use client"
-import React from 'react';
-import { useFormik, FormikHelpers } from 'formik';
-import * as Yup from 'yup';
-import axios from 'axios';
+"use client";
+import React from "react";
+import { useFormik, FormikHelpers } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
 
 // Define the shape of the form values
 interface FormValues {
@@ -13,49 +13,57 @@ interface FormValues {
 }
 
 function ContactForm() {
-  // Initialize Formik with TypeScript
   const formik = useFormik<FormValues>({
     initialValues: {
-      name: '',
-      email: '',
-      phone: '',
-      message: '',
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required('Name is required'),
-      email: Yup.string().email('Invalid email address').required('Email is required'),
-      phone: Yup.string().required('Phone number is required').matches(
-        /^[0-9]{10}$/,
-        'Phone number must be 10 digits'
-      ),
-      message: Yup.string().required('Message is required'),
+      name: Yup.string().required("Name is required"),
+      email: Yup.string()
+        .email("Invalid email address")
+        .required("Email is required"),
+      phone: Yup.string()
+        .required("Phone number is required")
+        .matches(/^[0-9]{10}$/, "Phone number must be 10 digits"),
+      message: Yup.string().required("Message is required"),
     }),
-    // Function to handle form submission
-    onSubmit: async (values: FormValues, { resetForm }: FormikHelpers<FormValues>) => {
-      console.log('Form data submitted:', values); // Log form data before sending
+
+    onSubmit: async (
+      values: FormValues,
+      { resetForm }: FormikHelpers<FormValues>
+    ) => {
+      console.log("Form data submitted:", values); // Log form data before sending
 
       try {
-        // Send form data to the backend using Axios post request
-        const response = await axios.post('http://localhost:5004/submit-form', values);
+        const response = await axios.post(
+          "http://localhost:5004/submit-form",
+          values
+        );
         console.log(response.data);
-        alert('Message Sent Successfully. We will reply to you soon'); 
-        resetForm(); // Reset the form after successful submission
+        alert("Message Sent Successfully. We will reply to you soon");
+        resetForm();
       } catch (error) {
-        console.error('Error submitting data:', error);
-        alert('Failed to send message. Please try again.'); 
+        console.error("Error submitting data:", error);
+        alert("Failed to send message. Please try again.");
       }
     },
   });
 
   return (
     <div>
-      {/* Form component */}
       <form className="max-w-md mx-auto mt-6" onSubmit={formik.handleSubmit}>
         <div>
-          <p className='text-center text-xl text-blue-600 font-serif'>Don't be stranger</p>
-          <h1 className='text-center text-3xl mt-4 text-blue-600 font-serif'>You tell us. We Listen</h1>
+          <p className="text-center text-xl text-blue-600 font-serif">
+            Don't be stranger
+          </p>
+          <h1 className="text-center text-3xl mt-4 text-blue-600 font-serif">
+            You tell us. We Listen
+          </h1>
         </div>
-        {/* Input fields for name, email, phone, and message */}
+
         <div className="relative z-0 w-full mb-5 group mt-4">
           <input
             type="text"
@@ -68,7 +76,7 @@ function ContactForm() {
             onBlur={formik.handleBlur}
             required
           />
-          {/* Error message display for name field if touched and error exists */}
+
           {formik.touched.name && formik.errors.name ? (
             <p className="error">{formik.errors.name}</p>
           ) : null}
@@ -86,7 +94,7 @@ function ContactForm() {
             onBlur={formik.handleBlur}
             required
           />
-          {/* Error message display for email field if touched and error exists */}
+
           {formik.touched.email && formik.errors.email ? (
             <p className="error">{formik.errors.email}</p>
           ) : null}
@@ -104,7 +112,7 @@ function ContactForm() {
             onBlur={formik.handleBlur}
             required
           />
-          {/* Error message display for phone field if touched and error exists */}
+
           {formik.touched.phone && formik.errors.phone ? (
             <p className="error">{formik.errors.phone}</p>
           ) : null}
@@ -122,7 +130,7 @@ function ContactForm() {
             onBlur={formik.handleBlur}
             required
           />
-          {/* Error message display for message field if touched and error exists */}
+
           {formik.touched.message && formik.errors.message ? (
             <p className="error">{formik.errors.message}</p>
           ) : null}

@@ -3,7 +3,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import Button from '../../components/Button'; // Adjust the import path as needed
+import Button from '../../components/Button';
 
 function JoinUsForm() {
   const formik = useFormik({

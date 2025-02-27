@@ -4,20 +4,21 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import image from "../../../public/images/hi-removebg-preview.png"; 
-import { useNavbarContext } from "../context/NavbarContext"; 
+import { useNavbarContext } from "../context/NavbarContext";
 
-const Navbar = () => {
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
+const Navbar: React.FC = () => {
+  const [isSidebarOpen, setSidebarOpen] = useState<boolean>(false);
+  const [isDropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const { isNavbarTransparent, setIsNavbarTransparent } = useNavbarContext();
   const pathname = usePathname();
 
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
   const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
-    const handleMediaClick=()=>{
-      setSidebarOpen(false);
-      setDropdownOpen(false);
-    }
+  const handleMediaClick = () => {
+    setSidebarOpen(false);
+    setDropdownOpen(false);
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0) {
@@ -44,7 +45,7 @@ const Navbar = () => {
 
   const handleLinkClick = () => setSidebarOpen(false);
 
-  const getActivePageName = () => {
+  const getActivePageName = (): string => {
     switch (pathname) {
       case "/":
         return "Home";
@@ -63,7 +64,6 @@ const Navbar = () => {
 
   return (
     <>
-     
       <div
         className={`fixed top-0 left-0 bg-blue-200 text-black transform transition-transform duration-500 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
@@ -194,7 +194,6 @@ const Navbar = () => {
         </ul>
       </div>
 
-     
       <nav
         className={`fixed top-0 left-0 w-full flex items-center justify-between z-20 transition-all duration-300 ${
           isNavbarTransparent
@@ -243,7 +242,7 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-    <div className="flex items-center mr-4">
+        <div className="flex items-center mr-4">
           <Link href="/pages/joinus">
             <button className="bg-teal-600 font-openSans hover:bg-teal-800 focus:ring-4 focus:ring-blue-300 text-lg rounded-full border-teal-200 px-4 py-2 text-center transition duration-300">
               JOIN US
