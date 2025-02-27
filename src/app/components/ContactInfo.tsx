@@ -3,10 +3,10 @@ import { FaArrowRight } from 'react-icons/fa';
 
 const InfoBoxes = () => {
   return (
-    <div className="flex justify-around space-x-4 mt-6">
-      {/* Call Us Box */}
-      <div className="relative flex items-center">
-        <div className="relative w-64 bg-transparent border border-blue-500 text-black rounded-l-lg overflow-hidden transition-all duration-500 group p-2">
+    <div className="flex flex-wrap justify-center gap-4 mt-6">
+      
+      <div className="relative flex items-center w-full sm:w-64">
+        <div className="relative w-full bg-transparent border border-blue-500 text-black rounded-l-lg overflow-hidden transition-all duration-500 group p-2">
           <div className="absolute inset-0 flex items-center justify-center bg-blue-500 text-white transform -translate-x-full transition-transform duration-500 group-hover:translate-x-0 p-2">
             <div className="text-center">
               <p className="text-lg">01-528029</p>
@@ -21,9 +21,9 @@ const InfoBoxes = () => {
         </div>
       </div>
 
-      {/* Visit Us Box */}
-      <div className="relative flex items-center">
-        <div className="relative w-64 bg-transparent border border-blue-500 text-black rounded-l-lg overflow-hidden transition-all duration-500 group p-2">
+      
+      <div className="relative flex items-center w-full sm:w-64">
+        <div className="relative w-full bg-transparent border border-blue-500 text-black rounded-l-lg overflow-hidden transition-all duration-500 group p-2">
           <div className="absolute inset-0 flex items-center justify-center bg-blue-500 text-white transform -translate-x-full transition-transform duration-500 group-hover:translate-x-0 p-2">
             <div className="text-center">
               <p className="text-lg">Lalitpur, Kathmandu</p>
@@ -38,9 +38,9 @@ const InfoBoxes = () => {
         </div>
       </div>
 
-      {/* Email Box */}
-      <div className="relative flex items-center">
-        <div className="relative w-64 bg-transparent border border-blue-500 text-black rounded-l-lg overflow-hidden transition-all duration-500 group p-2">
+      
+      <div className="relative flex items-center w-full sm:w-64">
+        <div className="relative w-full bg-transparent border border-blue-500 text-black rounded-l-lg overflow-hidden transition-all duration-500 group p-2">
           <div className="absolute inset-0 flex items-center justify-center bg-blue-500 text-white transform -translate-x-full transition-transform duration-500 group-hover:translate-x-0 p-2">
             <div className="text-center">
               <p className="text-lg">middlewaysfilms@gmail.com</p>
