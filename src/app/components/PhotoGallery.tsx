@@ -12,7 +12,7 @@ interface Photo {
   id: number;
   src: PhotoSrc;
   photographer: string;
-  alt: string;
+  alt?: string;
 }
 
 interface PhotoGalleryProps {
