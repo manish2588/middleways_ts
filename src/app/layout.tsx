@@ -1,5 +1,5 @@
-"use client"
-import { useState, useEffect } from "react";
+"use client";
+import { useState, useEffect, ReactNode } from "react";
 import { usePathname } from "next/navigation"; // Next.js hook for detecting pathname changes
 import { NavbarProvider } from "./context/NavbarContext";
 import Navbar from "./components/Navbar";
@@ -7,9 +7,11 @@ import "./globals.css";
 import Footer from "./components/Footer";
 import Loader from "./components/Loader"; 
 
+interface RootLayoutProps {
+  children: ReactNode; // Typing the children prop as ReactNode
+}
 
-
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: RootLayoutProps) {
   const [loading, setLoading] = useState(false);
   const pathname = usePathname();
 
@@ -17,7 +19,6 @@ export default function RootLayout({ children }) {
     const handleStart = () => setLoading(true);
     const handleComplete = () => setLoading(false);
 
-    
     handleStart();
     setTimeout(handleComplete, 1000); 
 
