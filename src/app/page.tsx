@@ -8,7 +8,7 @@ import ImageSlider1 from "./components/ImageSlider2";
 import ContactInfo from "./components/ContactInfo";
 import VideoGallery from "./components/VideoGallery";
 import ImageSlider3 from "./components/ImageSlider3";
-
+import {motion} from "framer-motion"
 const Home: React.FC = () => {
   const images1: string[] = [
     "/images/Client1-removebg-preview.png",
@@ -48,7 +48,11 @@ const Home: React.FC = () => {
           priority
         />
         <div className="absolute inset-0 bg-black opacity-50"></div>
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center space-y-6 mb-10">
+        <motion.div className="absolute inset-0 flex flex-col items-center justify-center text-center space-y-6 mb-10"
+         initial={{opacity:0,scale:0}}
+         whileInView={{opacity:1,scale:1}}
+         transition={{duration:1,type:"spring",damping:20,stiffness:200}}
+        >
           <h1 className="text-white text-5xl font-semibold">
             <span className="block font font-josefinSans">We Are Story Teller</span>
             <span className="block font-josefinSans">At</span>
@@ -65,32 +69,40 @@ const Home: React.FC = () => {
           <div>
             <ImageSlider1 images={images2} />
           </div>
-        </div>
+        </motion.div>
       </div>
-      <div className="w-full md:w-3/4 lg:w-2/3 mx-auto p-4 rounded-lg mt-6">
-        <div className="w-full flex justify-center">
-          <h1 className="mb-4 text-3xl font-large text-center font-serif">
+      <motion.div className="w-full md:w-3/4 lg:w-2/3 mx-auto p-4 rounded-lg mt-6"
+     
+      >
+        <motion.div className="w-full flex justify-center"
+        
+        >
+          <h1 className="mb-4 text-2xl md:text-3xl lg:text-4xl font-serif">
             LIGHTS ! CAMERA ! ACTION!
           </h1>
-        </div>
+        </motion.div>
         <div className="w-full flex justify-center">
-          <h1 className="mb-4 text-3xl font-large text-center font-serif">
+          <h1 className="mb-4 text-2xl md:text-3xl lg:text-4xl font-serif">
             We Are Story Teller At Our Very Essence
           </h1>
         </div>
         <div className="w-full flex justify-center mt-8">
-          <h1 className="mb-4 text-5xl font-large font-medium text-center font-josefinSans text-black">
+          <h1 className="mb-4 text-2xl md:text-3xl lg:text-4xl font-serif">
             MIDDLEWAYS FILMS
           </h1>
         </div>
         <div className="w-full flex justify-center">
-          <h1 className="mb-2 mt-4 text-2xl font-large text-center font-openSans">
+          <h1 className="mb-4 text-2xl md:text-3xl lg:text-4xl font-serif">
             ONE STOP SOLUTION FOR LINE PRODUCTION AND FIXING IN NEPAL
           </h1>
         </div>
-        <p
-          className="mb-3 font-thin text-gray-500 dark:text-gray-400 tracking-wide font-openSans"
+        <motion.p
+          className="mb-3 text-base md:text-lg lg:text-xl  text-gray-950 dark:text-gray-400 tracking-wide font-openSans"
           style={{ textAlign: "justify" }}
+          initial={{opacity:0}}
+          whileInView={{opacity:1}}
+          transition={{duration:1,type:"spring",damping:100,stiffness:100}}
+          viewport={{once:true}}
         >
           We are MIDDLEWAYS FILMS, your gateway to exceptional film production.
           Based in Lalitpur, Kathmandu, Nepal, we specialize in crafting
@@ -106,7 +118,7 @@ const Home: React.FC = () => {
           providing an unforgettable filming experience against the breathtaking
           backdrop of Nepal. Get in touch with us now to elevate your project to
           new heights.
-        </p>
+        </motion.p>
         <div className="w-full flex justify-center">
           <Button
             className="font-serif mb-4 bg-transparent text-black border border-black hover:bg-black hover:text-white hover:border-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-thin text-sm w-full sm:w-auto px-5 py-2 text-center"
@@ -121,7 +133,7 @@ const Home: React.FC = () => {
             href="/pages/contact" // Add appropriate href
           />
         </div>
-      </div>
+      </motion.div>
       <div className="p-4 flex flex-col justify-center text-center px-10 mx-20 rounded-md space-y-8 mt-8">
         <h1 className="text-2xl font-semibold mb-4 font-openSans">OUR HAPPY CLIENTS</h1>
         <ImageSlider images={images1} />
@@ -142,9 +154,14 @@ const Home: React.FC = () => {
           <ContactInfo />
         </div>
       </div>
-      <div className="mx-12">
+      <motion.div className="mx-12"
+        initial={{opacity:0}}
+        whileInView={{opacity:1}}
+        transition={{duration:1,type:"spring",damping:100,stiffness:100}}
+        viewport={{once:true}}
+      >
         <VideoGallery />
-      </div>
+      </motion.div>
     </main>
   );
 }

@@ -2,7 +2,7 @@
 import React from 'react';
 import Button from './Button';
 import Link from 'next/link';
-
+import {motion} from "framer-motion"
 const videos = [
   {
     title: 'Project 4',
@@ -30,7 +30,12 @@ const videos = [
 
 const VideoGallery = () => {
   return (
-    <div className="container mx-auto p-4">
+    <motion.div className="container mx-auto p-4"
+    initial={{opacity:0}}
+    whileInView={{opacity:1}}
+    transition={{duration:1,type:"spring",damping:100,stiffness:100}}
+    viewport={{once:true}}
+    >
       <h2 className=" mb-8 text-center text-2xl underline underline-offset-8 decoration-blue-500 font-semibold">OUR PROJECTS</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {videos.map((video, index) => (
@@ -58,7 +63,7 @@ const VideoGallery = () => {
         />
       </Link>
         </div>
-    </div>
+    </motion.div>
   );
 };
 

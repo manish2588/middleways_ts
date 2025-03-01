@@ -1,10 +1,10 @@
-// pages/contact.tsx
 "use client"
 import React from 'react';
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 import InfoCard from '../../components/InfoCard';
 import Card from '../../components/Card';
 import ContactForm from '../../components/ContactForm';
+import { motion } from 'framer-motion';
 
 // Define types for card and infoCard objects
 interface CardData {
@@ -18,6 +18,22 @@ interface InfoCardData {
   description: string;
   href: string;
 }
+
+// Animation Variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.3, // Delay between each child
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+};
 
 const Contact: React.FC = () => {
   const handleSubmit = () => {
@@ -45,18 +61,28 @@ const Contact: React.FC = () => {
         </h1>
       </div>
 
-      <div className="p-2 ">
+      {/* Staggered Card Animation */}
+      <motion.div
+        className="p-2"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
           {cards.slice(0, 3).map((card, index) => (
-            <Card key={index} {...card} />
+            <motion.div key={index} variants={itemVariants}>
+              <Card {...card} />
+            </motion.div>
           ))}
         </div>
         <div className="flex justify-center mt-1">
           {cards.slice(3).map((card, index) => (
-            <Card key={index} {...card} />
+            <motion.div key={index} variants={itemVariants}>
+              <Card {...card} />
+            </motion.div>
           ))}
         </div>
-      </div>
+      </motion.div>
 
       <div className="text-center">
         <h2 className='text-3xl font-bold underline underline-offset-8 decoration-blue-500 font-openSans'>Contact Us</h2>
@@ -67,19 +93,28 @@ const Contact: React.FC = () => {
           <ContactForm onSubmit={handleSubmit} />
         </div>
 
-        <div className="w-full lg:w-1/3 bg-white p-6 rounded-lg">
+        {/* Staggered InfoCard Animation */}
+        <motion.div
+          className="w-full lg:w-1/3 bg-white p-6 rounded-lg"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{amount:0.8,once:true}}
+          
+        >
           <div className="flex flex-col gap-6">
             {infoCards.map((infoCard, index) => (
-              <InfoCard
-                key={index}
-                icon={infoCard.icon}
-                title={infoCard.title}
-                description={infoCard.description}
-                href={infoCard.href}
-              />
+              <motion.div key={index} variants={itemVariants}>
+                <InfoCard
+                  icon={infoCard.icon}
+                  title={infoCard.title}
+                  description={infoCard.description}
+                  href={infoCard.href}
+                />
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
