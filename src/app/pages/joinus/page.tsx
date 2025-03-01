@@ -1,12 +1,22 @@
-"use client"
+"use client";
+
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import Button from '../../components/Button';
 
-function JoinUsForm() {
-  const formik = useFormik({
+interface FormValues {
+  name: string;
+  address: string;
+  email: string;
+  phoneNumber: string;
+  job: string;
+  cv: File | null;
+}
+
+const JoinUsForm: React.FC = () => {
+  const formik = useFormik<FormValues>({
     initialValues: {
       name: '',
       address: '',
@@ -33,8 +43,12 @@ function JoinUsForm() {
       formDataToSend.append('email', values.email);
       formDataToSend.append('phoneNumber', values.phoneNumber);
       formDataToSend.append('job', values.job);
-      formDataToSend.append('cv', values.cv);
-      
+    
+      // Only append the CV if it's not null
+      if (values.cv) {
+        formDataToSend.append('cv', values.cv);
+      }
+    
       try {
         const response = await axios.post('/api/submit-form', formDataToSend);
         console.log(response.data);
@@ -48,7 +62,7 @@ function JoinUsForm() {
   });
 
   return (
-    <div className='bg-gray-300'>
+    <div className="bg-gray-300">
       <form className="max-w-2xl mx-auto p-8 rounded-lg mt-24" onSubmit={formik.handleSubmit}>
         <h2 className="text-center text-4xl font-medium text-black mb-6 font-serif">Join Our Team</h2>
         <p className="text-center text-xl text-black mb-8 font-mono">We are looking for talented people to join our collaborative team</p>
@@ -133,12 +147,15 @@ function JoinUsForm() {
                 id="cv"
                 name="cv"
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                onChange={(event) => formik.setFieldValue("cv", event.currentTarget.files[0])}
+                onChange={(event) => {
+                  const file = event.currentTarget.files ? event.currentTarget.files[0] : null;
+                  formik.setFieldValue("cv", file);
+                }}
               />
             </div>
             <Button
               type="button"
-              onClick={() => document.getElementById('cv').click()}
+              onClick={() => document.getElementById('cv')?.click()}
               className="ml-2 bg-slate-800 hover:bg-slate-400 focus:ring-4 focus:ring-blue-300 text-white font-medium rounded-lg text-sm px-4 py-2 focus:outline-none"
               label="Choose File"
             />

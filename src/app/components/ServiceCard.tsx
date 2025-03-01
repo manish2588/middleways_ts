@@ -3,8 +3,9 @@ import { useState } from "react";
 import Image from "next/image";
 import Button from "../components/Button";
 import {motion} from 'framer-motion'
+import { StaticImageData } from 'next/image';
 interface ServiceCardProps {
-  image: string;
+  image: StaticImageData;
   title: string;
   description: string;
   moreDescription?: string;
