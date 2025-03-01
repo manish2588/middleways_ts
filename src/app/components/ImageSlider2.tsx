@@ -1,7 +1,7 @@
 "use client";
 
-import Image from 'next/image';
-import { useRef, useEffect, useCallback } from 'react';
+import Image from "next/image";
+import { useRef, useEffect, useCallback } from "react";
 
 interface ImageSliderProps {
   images: string[];
@@ -18,7 +18,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
       isDraggingRef.current = true;
       startXRef.current = e.pageX - sliderRef.current.offsetLeft;
       scrollLeftRef.current = sliderRef.current.scrollLeft;
-      sliderRef.current.classList.add('cursor-grabbing');
+      sliderRef.current.classList.add("cursor-grabbing");
     }
   }, []);
 
@@ -32,13 +32,13 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
   const handleMouseUp = useCallback(() => {
     isDraggingRef.current = false;
     if (sliderRef.current) {
-      sliderRef.current.classList.remove('cursor-grabbing');
+      sliderRef.current.classList.remove("cursor-grabbing");
     }
   }, []);
 
   const handleMouseLeave = useCallback(() => {
     if (isDraggingRef.current) {
-      handleMouseUp();
+      handleMouseUp(); // Now it works without an argument
     }
   }, [handleMouseUp]);
 
@@ -50,16 +50,16 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
     const slider = sliderRef.current;
     if (!slider) return;
 
-    slider.addEventListener('mousedown', handleMouseDown as any);
-    slider.addEventListener('mousemove', handleMouseMove as any);
-    slider.addEventListener('mouseup', handleMouseUp as any);
-    slider.addEventListener('mouseleave', handleMouseLeave as any);
+    slider.addEventListener("mousedown", (e) => handleMouseDown(e as any));
+    slider.addEventListener("mousemove", (e) => handleMouseMove(e as any));
+    slider.addEventListener("mouseup", () => handleMouseUp());
+    slider.addEventListener("mouseleave", () => handleMouseLeave());
 
     return () => {
-      slider.removeEventListener('mousedown', handleMouseDown as any);
-      slider.removeEventListener('mousemove', handleMouseMove as any);
-      slider.removeEventListener('mouseup', handleMouseUp as any);
-      slider.removeEventListener('mouseleave', handleMouseLeave as any);
+      slider.removeEventListener("mousedown", (e) => handleMouseDown(e as any));
+      slider.removeEventListener("mousemove", (e) => handleMouseMove(e as any));
+      slider.removeEventListener("mouseup", () => handleMouseUp());
+      slider.removeEventListener("mouseleave", () => handleMouseLeave());
     };
   }, [handleMouseDown, handleMouseMove, handleMouseUp, handleMouseLeave]);
 
@@ -70,18 +70,8 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
         className="flex overflow-x-auto space-x-16 py-4 scroll-hidden cursor-grab"
       >
         {images.map((src, index) => (
-          <div
-            key={index}
-            className="flex-shrink-0 w-32 h-16"
-            onDragStart={preventImageDrag}
-          >
-            <Image
-              src={src}
-              alt={`Image ${index}`}
-              width={128}
-              height={70}
-              className="object-cover rounded-lg select-none"
-            />
+          <div key={index} className="flex-shrink-0 w-32 h-16" onDragStart={preventImageDrag}>
+            <Image src={src} alt={`Image ${index}`} width={128} height={70} className="object-cover rounded-lg select-none" />
           </div>
         ))}
       </div>
