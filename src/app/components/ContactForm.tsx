@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import { useFormik, FormikHelpers } from "formik";
 import * as Yup from "yup";
@@ -12,7 +11,7 @@ interface FormValues {
   message: string;
 }
 
-function ContactForm() {
+const ContactForm: React.FC = () => {
   const formik = useFormik<FormValues>({
     initialValues: {
       name: "",
@@ -33,7 +32,7 @@ function ContactForm() {
 
     onSubmit: async (
       values: FormValues,
-      { resetForm }: FormikHelpers<FormValues>
+      { resetForm, setSubmitting, setStatus, setErrors, setTouched }: FormikHelpers<FormValues>
     ) => {
       console.log("Form data submitted:", values); // Log form data before sending
 
@@ -48,6 +47,10 @@ function ContactForm() {
       } catch (error) {
         console.error("Error submitting data:", error);
         alert("Failed to send message. Please try again.");
+        // You can optionally handle form errors here, like:
+        setErrors({ message: "There was an error submitting the form" });
+      } finally {
+        setSubmitting(false); // Make sure to reset submitting state after the form is submitted
       }
     },
   });
@@ -76,7 +79,6 @@ function ContactForm() {
             onBlur={formik.handleBlur}
             required
           />
-
           {formik.touched.name && formik.errors.name ? (
             <p className="error">{formik.errors.name}</p>
           ) : null}
@@ -94,7 +96,6 @@ function ContactForm() {
             onBlur={formik.handleBlur}
             required
           />
-
           {formik.touched.email && formik.errors.email ? (
             <p className="error">{formik.errors.email}</p>
           ) : null}
@@ -112,7 +113,6 @@ function ContactForm() {
             onBlur={formik.handleBlur}
             required
           />
-
           {formik.touched.phone && formik.errors.phone ? (
             <p className="error">{formik.errors.phone}</p>
           ) : null}
@@ -130,7 +130,6 @@ function ContactForm() {
             onBlur={formik.handleBlur}
             required
           />
-
           {formik.touched.message && formik.errors.message ? (
             <p className="error">{formik.errors.message}</p>
           ) : null}
@@ -145,6 +144,6 @@ function ContactForm() {
       </form>
     </div>
   );
-}
+};
 
 export default ContactForm;

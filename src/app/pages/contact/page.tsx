@@ -19,6 +19,7 @@ interface InfoCardData {
   href: string;
 }
 
+
 // Animation Variants
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -90,7 +91,7 @@ const Contact: React.FC = () => {
 
       <div className="flex flex-col lg:flex-row lg:justify-between w-full max-w-4xl px-6 py-4 gap-8">
         <div className="w-full lg:w-2/3 bg-white p-6 rounded-lg">
-          <ContactForm onSubmit={handleSubmit} />
+          <ContactForm />
         </div>
 
         {/* Staggered InfoCard Animation */}
