@@ -1,10 +1,10 @@
 "use client";
 
-import Image from 'next/image';
-import { useRef, useState, useEffect, MouseEvent, DragEvent } from 'react';
+import Image from "next/image";
+import { useRef, useState, useEffect } from "react";
 
 interface ImageSlider3Props {
-  images: string[]; // Array of image URLs
+  images: string[];
 }
 
 const ImageSlider3: React.FC<ImageSlider3Props> = ({ images }) => {
@@ -14,16 +14,16 @@ const ImageSlider3: React.FC<ImageSlider3Props> = ({ images }) => {
   const [scrollLeft, setScrollLeft] = useState<number>(0);
   const [scrollSpeed, setScrollSpeed] = useState<number>(0);
 
-  const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
+  const handleMouseDown = (e: MouseEvent) => {
     if (sliderRef.current) {
       setIsDragging(true);
       setStartX(e.pageX - sliderRef.current.offsetLeft);
       setScrollLeft(sliderRef.current.scrollLeft);
-      sliderRef.current.classList.add('cursor-grabbing');
+      sliderRef.current.classList.add("cursor-grabbing");
     }
   };
 
-  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: MouseEvent) => {
     if (!isDragging || !sliderRef.current) return;
     const x = e.pageX - sliderRef.current.offsetLeft;
     const walk = (x - startX) * 2;
@@ -33,7 +33,7 @@ const ImageSlider3: React.FC<ImageSlider3Props> = ({ images }) => {
   const handleMouseUp = () => {
     setIsDragging(false);
     if (sliderRef.current) {
-      sliderRef.current.classList.remove('cursor-grabbing');
+      sliderRef.current.classList.remove("cursor-grabbing");
     }
   };
 
@@ -43,106 +43,50 @@ const ImageSlider3: React.FC<ImageSlider3Props> = ({ images }) => {
     }
   };
 
-  const preventImageDrag = (e: DragEvent<HTMLDivElement>) => {
+  const preventImageDrag = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    e.stopPropagation();
   };
 
   useEffect(() => {
     const slider = sliderRef.current;
     if (!slider) return;
 
-    const startScrolling = () => {
-      setScrollSpeed(1);
-    };
-
-    const stopScrolling = () => {
-      setScrollSpeed(0);
-    };
-
-    const animate = () => {
-      if (!slider) return;
-      slider.scrollLeft += scrollSpeed;
-      if (slider.scrollLeft >= slider.scrollWidth / 2) {
-        slider.scrollLeft = slider.scrollWidth / 4;
-      }
-      if (scrollSpeed > 0) {
-        requestAnimationFrame(animate);
-      }
-    };
-
-    startScrolling();
-    animate();
+    slider.addEventListener("mousedown", handleMouseDown);
+    slider.addEventListener("mousemove", handleMouseMove);
+    slider.addEventListener("mouseup", handleMouseUp);
+    slider.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
-      stopScrolling();
+      slider.removeEventListener("mousedown", handleMouseDown);
+      slider.removeEventListener("mousemove", handleMouseMove);
+      slider.removeEventListener("mouseup", handleMouseUp);
+      slider.removeEventListener("mouseleave", handleMouseLeave);
     };
-  }, [scrollSpeed]);
-
-  useEffect(() => {
-    const slider = sliderRef.current;
-    const handleScroll = () => {
-      if (!slider) return;
-      const { scrollLeft, scrollWidth, clientWidth } = slider;
-      if (scrollLeft === 0) {
-        slider.scrollLeft = scrollWidth - 2 * clientWidth;
-      } else if (scrollLeft + clientWidth >= scrollWidth) {
-        slider.scrollLeft = clientWidth;
-      }
-    };
-
-    if (slider) {
-      slider.addEventListener('scroll', handleScroll);
-    }
-
-    return () => {
-      if (slider) {
-        slider.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, []);
+  }, [isDragging, startX, scrollLeft]);
 
   const allImages = [...images, ...images, ...images];
-
-  useEffect(() => {
-    const slider = sliderRef.current;
-
-    if (slider) {
-      slider.addEventListener('mousedown', handleMouseDown);
-      slider.addEventListener('mousemove', handleMouseMove);
-      slider.addEventListener('mouseup', handleMouseUp);
-      slider.addEventListener('mouseleave', handleMouseLeave);
-
-      return () => {
-        slider.removeEventListener('mousedown', handleMouseDown);
-        slider.removeEventListener('mousemove', handleMouseMove);
-        slider.removeEventListener('mouseup', handleMouseUp);
-        slider.removeEventListener('mouseleave', handleMouseLeave);
-      };
-    }
-  }, [isDragging, startX, scrollLeft]);
 
   return (
     <div className="relative overflow-hidden bg-transparent w-[60vw]">
       <div
         ref={sliderRef}
         className="flex overflow-x-auto space-x-16 py-4 scroll-hidden cursor-grab"
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
+        onMouseDown={(e) => handleMouseDown(e as unknown as MouseEvent)}
+        onMouseMove={(e) => handleMouseMove(e as unknown as MouseEvent)}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
       >
         {allImages.map((src, index) => (
           <div
             key={index}
-            className="flex-shrink-0 w-64 h-36" // Adjust size here
+            className="flex-shrink-0 w-64 h-36"
             onDragStart={preventImageDrag}
           >
             <Image
               src={src}
               alt={`Image ${index}`}
-              width={256} // Adjust width here
-              height={144} // Adjust height here
+              width={256}
+              height={144}
               className="object-cover rounded-lg select-none"
             />
           </div>
