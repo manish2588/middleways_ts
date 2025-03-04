@@ -23,7 +23,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
 
   return (
     <motion.div className="mt-10 flex justify-center"
-    layout
+    
     initial={{opacity:0}}
     whileInView={{opacity:1}}
     transition={{duration:0.5,type:"spring",damping:100,stiffness:100}}
@@ -42,7 +42,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
           className="sm:w-1/2 w-full object-cover"
         />
         <motion.div className="p-4 sm:p-8 flex flex-col justify-between flex-grow transition-all duration-300 ease-in-out w-full sm:w-1/2"
-        layout
+       
         >
           <div>
             <h5 className="mb-2 text-2xl font-medium font-openSans">{title}</h5>

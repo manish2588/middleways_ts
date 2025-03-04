@@ -82,7 +82,7 @@ const Home: React.FC = () => {
           </h1>
         </motion.div>
         <div className="w-full flex justify-center">
-          <h1 className="mb-4 text-2xl md:text-3xl lg:text-4xl font-serif">
+          <h1 className="mb-4 text-lg md:text-3xl lg:text-4xl font-serif">
             We Are Story Teller At Our Very Essence
           </h1>
         </div>
@@ -92,7 +92,7 @@ const Home: React.FC = () => {
           </h1>
         </div>
         <div className="w-full flex justify-center">
-          <h1 className="mb-4 text-2xl md:text-3xl lg:text-4xl font-serif">
+          <h1 className="mb-4 text-lg text-center md:text-3xl lg:text-4xl font-serif">
             ONE STOP SOLUTION FOR LINE PRODUCTION AND FIXING IN NEPAL
           </h1>
         </div>
